@@ -2,20 +2,21 @@ $(document).ready(function () {
     //create question objects with arrays of potential answers
     var questNum = 0;
     var intervalID;
-    var startNum = 11;
+    var startNum = 10;
     var correctAnswer = 0;
     var wrongAnswer = 0;
     var unanswered = 0;
+    var userGuess
 
     var gameArray = [{
-        q: "In the episode I Love Lisa, Lisa gives Ralph 2 Valentine's Day cards. What is the message on the first one?",
+        q: "In the episode I Love Lisa, Lisa gives Ralph 2 Valentine's Day cards. What is written on the first one?",
         a: "I choo-choo choose you",
         c: ["You're deer to me", "Let's bee friends", "I choo-choo choose you", "We make a great pear"],
         wg: "<img src='https://media1.giphy.com/media/d2VNDNckZ1OQWbN6/giphy.gif?cid=3640f6095bf0c2334177674a41dd10fd'>",
         lg: "<img src='https://media1.giphy.com/media/84FhycnOdcqM8/giphy.gif?cid=3640f6095bf0c3366a6c357277dd6314'>"
     },
     {
-        q: "In The Mysterious Voyage of Homer, Homer eats insanity peppers and begins to see visions of a talking coyote voiced by:",
+        q: "In The Mysterious Voyage of Homer, Homer eats insanity peppers and sees visions of a talking coyote voiced by:",
         a: "Johnny Cash",
         c: ["Chevy Chase", "Johnny Cash", "Garth Brooks", "George Carlin"],
         wg: "<img src='https://uproxx.files.wordpress.com/2014/02/tumblr_lr9ffau1td1qci5e2o1_500.gif?w=650'>",
@@ -24,7 +25,7 @@ $(document).ready(function () {
     {
         q: "In Selma's Choice, Lisa drinks the 'water' at Duff Gardens. As she is being escorted out she exclaims: ",
         a: "I am the lizard queen!",
-        c: ["I have a lovely bunch of coconuts", "Ay caramba", "Im fine!", "I am the lizard queen"],
+        c: ["I have a lovely bunch of coconuts!", "Ay caramba!", "Im fine!", "I am the lizard queen!"],
         wg: "<img src='https://media1.giphy.com/media/krE3UwqCFZDJm/giphy.gif?cid=3640f6095bf0c7e3466a6466456fc863'>",
         lg: "<img src='https://media0.giphy.com/media/xT5LMEjMwnFdulxLB6/200.webp?cid=3640f6095bf0cc535771504f738c757b'>",
     },
@@ -38,7 +39,7 @@ $(document).ready(function () {
     {
         q: "In Radioactive Man, bart misses out on being Fallout boy because: ",
         a: "He was too short",
-        c: ["He was too short", "He slept through the audition", "He froze during the audition", "Marge wouldn't let him audition"],
+        c: ["He was too short", "He slept through the audition", "He got stage fright", "Marge wouldn't let him"],
         wg: "<img src='https://media2.giphy.com/media/7amzk5DFmH4Z2/200.webp?cid=3640f6095bf0d0866177534e77459768'>",
         lg: "<img src='https://media1.giphy.com/media/l2Je2SEdDajCzM5Ow/200.webp?cid=3640f6095bf0d0ba58386e576f39ebc7'>",
     },
@@ -59,14 +60,14 @@ $(document).ready(function () {
     {
         q: "In Bart After Dark, Homer's punishment accidentally leaves Bart working at: ",
         a: "A Burlesque House",
-        c: ["the Kwik-E-Mart", "The Springfield Police", "A Burlesque House", "Moe's Tavern"],
+        c: ["The Kwik-E-Mart", "The Springfield Police", "A Burlesque House", "Moe's Tavern"],
         wg: "<img src='https://media3.giphy.com/media/3o6Mb4TiKelec4cYnu/200.webp?cid=3640f6095bf0dd05344f426c51c47894'>",
         lg: "<img src='https://media2.giphy.com/media/hggKJJZzXmv0A/200.webp?cid=3640f6095bf0dcb66675394e499d6fd5'>",
     },
     {
         q: "In 22 Films About Springfield, while having dinner with Superintendent Chalmers what does Principal Skinner claim is happening in his kitchen?",
         a: "Aurora Borealis",
-        c: ["Aurora Borealis", "Circus Act", "Food Robbery", "Renovations"],
+        c: ["Aurora Borealis", "Circus Act", "Raccoons", "Renovations"],
         wg: "<img src='https://media3.giphy.com/media/9Bpv0NoXnZQ2c/200.webp?cid=3640f6095bf0e3de7169327155bd3853'>",
         lg: "<img src='https://media0.giphy.com/media/13Ad2mtKsGukPC/200w.webp?cid=3640f6095bf0e3ba684a307841b2d4b1'>",
     },
@@ -94,15 +95,16 @@ $(document).ready(function () {
 
         //timer div set to empty
         $(".timer").empty();
+        $(".choices").empty();
 
         //questions div set to the game question (use [quest Num].q)
         $(".questions").text(gameArray[questNum].q)
 
         //for loop to set the different choices and append them to choices div
         for (i = 0; i < 4; i++) {
-            $(".choices").append("<br> <button>" + gameArray[questNum].c[i] + " </button> <br>")
+            $(".choices").append("<br> <div class='numBtn'>" + gameArray[questNum].c[i] + " </div> <br>")
         }
-
+        $(".timer").text("Time remaining: " + startNum);
         //set an interval that counts seconds    
         intervalID = setInterval(countDown, 1000);
 
@@ -130,12 +132,12 @@ $(document).ready(function () {
                 $(".questions").text("Time's up!");
 
                 //replace the choices with "The correct answer was " + the answer pulled from gameArray[questNum].a  
-                $(".choices").text("The correct answer was " + gameArray[questNum].a);
+                $(".choices").append("<p>The correct answer was " + gameArray[questNum].a + "</p>");
                 console.log(gameArray[questNum].a);
 
                 //Append the gif to the end of the choices div
                 $(".choices").append("<br>" + gameArray[questNum].lg);
-
+                
                 //Add one to unanswered questions
                 unanswered++;
                 console.log(unanswered);
@@ -149,9 +151,27 @@ $(document).ready(function () {
                 //function to set the next question 
                 function timeUp() {
                     if (questNum === gameArray.length) {
+                        
                         $(".question").text("That all, here's how you did")
                         $(".choices").html("Correct Answers: " + correctAnswer + "<br> Wrong Answers: " + wrongAnswer + "<br> Unanswered Questions: " + unanswered);
+
                         $(".choices").append("<br><button class='reset'>Restart the game</button>");
+                        $(".reset").on("click", function(){
+                            $(".questions").empty();
+                                    $(".choices").empty();
+                            startNum = 10;
+                            questNum = 0;
+                            correctAnswer = 0;
+                            unanswered = 0;
+                            wrongAnswer = 0;
+                            $(".timer").text("Time remaining: " + startNum);
+                            intervalID = setInterval(countDown, 1000);
+                                    countDown();
+                                    $(".questions").text(gameArray[questNum].q);
+                                    for (i = 0; i < 4; i++) {
+                                        $(".choices").append("<br> <div class='numBtn'>" + gameArray[questNum].c[i] + " </div><br>")
+                                    }
+                        });
                         if (correctAnswer >= 7) {
                             $(".choices").append("<br><img src='https://media3.giphy.com/media/l2JejtUtX0ImRvLnq/200.webp?cid=3640f6095bf0f07a4167586549f343d8'><br><p>You diddly doodly did it!</p>")
                         }
@@ -171,6 +191,7 @@ $(document).ready(function () {
                         $(".choices").empty();
                         console.log(startNum);
 
+                        $(".timer").text("Time remaining: " + startNum);
                         //set the timer again
                         intervalID = setInterval(countDown, 1000);
 
@@ -182,7 +203,7 @@ $(document).ready(function () {
 
                         //set the next answers to html
                         for (i = 0; i < 4; i++) {
-                            $(".choices").append("<br> <button>" + gameArray[questNum].c[i] + " </button> <br>");
+                            $(".choices").append("<br> <div class='numBtn'>" + gameArray[questNum].c[i] + " </div> <br>");
                             };
                             
                     }
@@ -194,7 +215,7 @@ $(document).ready(function () {
 
 
         //functions for the user guess (button click)
-        $("button").on("click", function () {
+        $(".choices").on("click", ".numBtn", function () {
             clearInterval(intervalID);
             console.log(intervalID)
             userGuess = $(this).text();
@@ -214,6 +235,22 @@ $(document).ready(function () {
                         $(".question").text("That all, here's how you did")
                         $(".choices").html("Correct Answers: " + correctAnswer + "<br> Wrong Answers: " + wrongAnswer + "<br> Unanswered Questions: " + unanswered);
                         $(".choices").append("<br><button class='reset'>Restart the game</button>");
+                        $(".reset").on("click", function(){
+                            $(".questions").empty();
+                                    $(".choices").empty();
+                            startNum = 10;
+                            questNum = 0;
+                            correctAnswer = 0;
+                            unanswered = 0;
+                            wrongAnswer = 0;
+                            $(".timer").text("Time remaining: " + startNum);
+                            intervalID = setInterval(countDown, 1000);
+                                    countDown();
+                                    $(".questions").text(gameArray[questNum].q);
+                                    for (i = 0; i < 4; i++) {
+                                        $(".choices").append("<br> <div class='numBtn'>" + gameArray[questNum].c[i] + " </div><br>")
+                                    }
+                        })
                         if (correctAnswer >= 7) {
                             $(".choices").append("<br><img src='https://media3.giphy.com/media/l2JejtUtX0ImRvLnq/200.webp?cid=3640f6095bf0f07a4167586549f343d8'><br><p>You diddly doodly did it!</p>")
                         }
@@ -227,13 +264,15 @@ $(document).ready(function () {
 
                     else {
                         startNum = 10;
+                        $(".timer").empty();
                         $(".choices").empty();
                         console.log(startNum);
+                        $(".timer").text("Time remaining: " + startNum);
                         intervalID = setInterval(countDown, 1000);
                         countDown();
                         $(".questions").text(gameArray[questNum].q);
                         for (i = 0; i < 4; i++) {
-                            $(".choices").append("<br> <button>" + gameArray[questNum].c[i] + " </button> <br>");
+                            $(".choices").append("<br> <div class='numBtn'>" + gameArray[questNum].c[i] + " </div> <br>");
 
                         }
                     }
@@ -245,7 +284,7 @@ $(document).ready(function () {
             else {
                 $(".questions").text("Nope!");
                 $(".choices").empty();
-                $(".choices").text("The correct answer was: " + gameArray[questNum].a);
+                $(".choices").append("<p>The correct answer was: " + gameArray[questNum].a + "</p>");
                 $(".choices").append("<br>" + gameArray[questNum].lg);
                 wrongAnswer++;
                 questNum++;
@@ -256,6 +295,22 @@ $(document).ready(function () {
                         $(".question").text("That all, here's how you did")
                         $(".choices").html("Correct Answers: " + correctAnswer + "<br> Wrong Answers: " + wrongAnswer + "<br> Unanswered Questions: " + unanswered);
                         $(".choices").append("<br><button class='reset'>Restart the game</button>");
+                        $(".reset").on("click", function(){
+                            $(".questions").empty();
+                                    $(".choices").empty();
+                            startNum = 10;
+                            questNum = 0;
+                            correctAnswer = 0;
+                            unanswered = 0;
+                            wrongAnswer = 0;
+                            $(".timer").text("Time remaining: " + startNum);
+                            intervalID = setInterval(countDown, 1000);
+                                    countDown();
+                                    $(".questions").text(gameArray[questNum].q);
+                                    for (i = 0; i < 4; i++) {
+                                        $(".choices").append("<br> <div class='numBtn'>" + gameArray[questNum].c[i] + " </div><br>")
+                                    }
+                        })
                         if (correctAnswer >= 7) {
                             $(".choices").append("<br><img src='https://media3.giphy.com/media/l2JejtUtX0ImRvLnq/200.webp?cid=3640f6095bf0f07a4167586549f343d8'><br><p>You diddly doodly did it!</p>")
                         }
@@ -270,13 +325,15 @@ $(document).ready(function () {
                     else {
                         $(".questions").empty();
                         $(".choices").empty();
-                        startNum = 11;
+                        $(".timer").empty();
+                        startNum = 10;
                         console.log(startNum);
+                        $(".timer").text("Time remaining: " + startNum);
                         intervalID = setInterval(countDown, 1000);
                         countDown();
                         $(".questions").text(gameArray[questNum].q);
                         for (i = 0; i < 4; i++) {
-                            $(".choices").append("<br> <button>" + gameArray[questNum].c[i] + " </button><br>")
+                            $(".choices").append("<br> <div class='numBtn'>" + gameArray[questNum].c[i] + " </div><br>")
                         }
 
                     }
@@ -287,7 +344,19 @@ $(document).ready(function () {
                 }
 
             });
-
+            // $(".reset").on("click", function(){
+            //     $(".questions").empty();
+            //             $(".choices").empty();
+            //     startNum = 10;
+            //     questNum = 0;
+            //     $(".timer").text("Time remaining: " + startNum);
+            //     intervalID = setInterval(countDown, 1000);
+            //             countDown();
+            //             $(".questions").text(gameArray[questNum].q);
+            //             for (i = 0; i < 4; i++) {
+            //                 $(".choices").append("<br> <div class='numBtn'>" + gameArray[questNum].c[i] + " </div><br>")
+            //             }
+            // })
     });
 
 });

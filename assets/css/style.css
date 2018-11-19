@@ -1,11 +1,66 @@
-button:hover {
-    border: 2px red solid
+@font-face { font-family: SimpsonFont; src: url('Simpsonfont.ttf'); } 
+
+html {
+    background: url("https://i.pinimg.com/564x/20/b9/1c/20b91cffa1845f2845010b9afbd57842.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.startBtn:hover {
+    border: 2px red solid;
+    height: 30px;
+}
+
+.numBtn:hover {
+    border: 5px yellow outset;
+    border-radius: 5px;
+    box-shadow: 4px 4px black;
+    transition-duration: 0.5s;
 }
 
 h1 {
-    text-align: center;
+    /* text-align: center; */
+    font-size: 50px;
+    color: darkgoldenrod;
+    font-family: "Knewave", cursive;
+    padding: 10px;
+    border-bottom: 4px yellow dotted;
 }
 
-div {
-    text-align: center;
+.timer {
+    font-size: 30px;
+    color: red;
+    font-family: "Arbutus", cursive;
+    border: 2px red solid;
+    display: inline-block;
+    margin: 10px;
+}
+
+.questions {
+    font-size: 30px;
+    width: 60%;
+    font-family: "Chela One", cursive;
+    padding: 5px;
+}
+
+.numBtn {
+    font-size: 30px;
+    display: inline-block;
+    padding: 5px;
+    font-family: "Chela One", cursive;
+    color: green;
+    background-color: white;
+    border: 1px black round;
+    border-radius: 5px;
+    margin-left: 20px;
+}
+
+img {
+   height: 350px;
+   width: 350px;
+}
+
+p {
+    font-size: 35px; 
+    font-family: "Chela One", cursive;
 }
