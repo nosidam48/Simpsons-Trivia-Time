@@ -2,12 +2,12 @@ $(document).ready(function () {
     //create question objects with arrays of potential answers
     var questNum = 0;
     var intervalID;
-    var startNum = 10;
+    var startNum = 20;
     var correctAnswer = 0;
     var wrongAnswer = 0;
     var unanswered = 0;
     var userGuess
-
+    //array with game questions, answers, multiple choices and end gifs.
     var gameArray = [{
         q: "In the episode I Love Lisa, Lisa gives Ralph 2 Valentine's Day cards. What is written on the first one?",
         a: "I choo-choo choose you",
@@ -160,7 +160,7 @@ $(document).ready(function () {
                         $(".reset").on("click", function(){
                             $(".questions").empty();
                                     $(".choices").empty();
-                            startNum = 10;
+                            startNum = 20;
                             questNum = 0;
                             correctAnswer = 0;
                             unanswered = 0;
@@ -172,7 +172,7 @@ $(document).ready(function () {
                                     for (i = 0; i < 4; i++) {
                                         $(".choices").append("<br> <div class='numBtn'>" + gameArray[questNum].c[i] + " </div><br>");
                                         $(".timer").empty();
-                                        startNum = 10;
+                                        startNum = 20;
                                         console.log(startNum);
                                         $(".timer").text("Time remaining: " + startNum);
                                     }
@@ -197,7 +197,7 @@ $(document).ready(function () {
 
                     //timer back to ten
                     else {
-                        startNum = 10;
+                        startNum = 20;
 
                         //empty the choices div
                         $(".choices").empty();
@@ -218,7 +218,7 @@ $(document).ready(function () {
                             $(".choices").append("<br> <div class='numBtn'>" + gameArray[questNum].c[i] + " </div> <br>");
                             };
                             $(".timer").empty();
-                            startNum = 10;
+                            startNum = 20;
                             console.log(startNum);
                             $(".timer").text("Time remaining: " + startNum);
                             
@@ -257,13 +257,13 @@ $(document).ready(function () {
                         $(".reset").on("click", function(){
                             $(".questions").empty();
                                     $(".choices").empty();
-                            startNum = 10;
+                            startNum = 20;
                             questNum = 0;
                             correctAnswer = 0;
                             unanswered = 0;
                             wrongAnswer = 0;
                             
-                            startNum = 10;
+                            startNum = 20;
                             console.log(startNum);
                         $(".timer").text("Time remaining: " + startNum);
                             intervalID = setInterval(countDown, 1000);
@@ -291,7 +291,7 @@ $(document).ready(function () {
                     }
 
                     else {
-                        startNum = 10;
+                        startNum = 20;
                         $(".timer").empty();
                         $(".choices").empty();
                         console.log(startNum);
@@ -304,7 +304,7 @@ $(document).ready(function () {
 
                         };
                         $(".timer").empty();
-                        startNum = 10;
+                        startNum = 20;
                         console.log(startNum);
                         $(".timer").text("Time remaining: " + startNum);
                     }
@@ -323,10 +323,7 @@ $(document).ready(function () {
                 wrongAnswer++;
                 questNum++;
                 console.log("bleh");
-                // $(".timer").empty();
-                // startNum = 10;
-                // console.log(startNum);
-                // $(".timer").text("Time remaining: " + startNum);
+                
                 setTimeout(loser, 5000);
                 function loser() {
                     if (questNum === gameArray.length) {
@@ -337,7 +334,7 @@ $(document).ready(function () {
                         $(".reset").on("click", function(){
                             $(".questions").empty();
                                     $(".choices").empty();
-                            startNum = 10;
+                            startNum = 20;
                             questNum = 0;
                             correctAnswer = 0;
                             unanswered = 0;
@@ -374,17 +371,14 @@ $(document).ready(function () {
                     else {
                         $(".questions").empty();
                         $(".choices").empty();
-                        // $(".timer").empty();
-                        // startNum = 10;
-                        // console.log(startNum);
-                        // $(".timer").text("Time remaining: " + startNum);
+                        
                         intervalID = setInterval(countDown, 1000);
                         countDown();
                         $(".questions").text(gameArray[questNum].q);
                         for (i = 0; i < 4; i++) {
                             $(".choices").append("<br> <div class='numBtn'>" + gameArray[questNum].c[i] + " </div><br>")
                             $(".timer").empty();
-                        startNum = 10;
+                        startNum = 20;
                         console.log(startNum);
                         $(".timer").text("Time remaining: " + startNum);
                         }
@@ -397,19 +391,7 @@ $(document).ready(function () {
                 }
 
             });
-            // $(".reset").on("click", function(){
-            //     $(".questions").empty();
-            //             $(".choices").empty();
-            //     startNum = 10;
-            //     questNum = 0;
-            //     $(".timer").text("Time remaining: " + startNum);
-            //     intervalID = setInterval(countDown, 1000);
-            //             countDown();
-            //             $(".questions").text(gameArray[questNum].q);
-            //             for (i = 0; i < 4; i++) {
-            //                 $(".choices").append("<br> <div class='numBtn'>" + gameArray[questNum].c[i] + " </div><br>")
-            //             }
-            // })
+            
     });
 
 });
