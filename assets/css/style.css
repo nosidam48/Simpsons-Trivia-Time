@@ -12,19 +12,19 @@ html {
 }
 
 .numBtn:hover {
-    border: 5px yellow outset;
+    border: 5px green outset;
     border-radius: 5px;
-    box-shadow: 4px 4px black;
+    box-shadow: 4px 4px green;
     transition-duration: 0.5s;
 }
 
 h1 {
-    /* text-align: center; */
+    text-align: center;
     font-size: 50px;
-    color: darkgoldenrod;
+    color: blue;
     font-family: "Knewave", cursive;
     padding: 10px;
-    border-bottom: 4px yellow dotted;
+    border-bottom: 8px yellow dotted;
 }
 
 .timer {
@@ -36,11 +36,27 @@ h1 {
     margin: 10px;
 }
 
-.questions {
+.reset:hover {
+    box-shadow: 4px red; 
+}
+
+.reset {
     font-size: 30px;
+    color: red;
+    font-family: "Arbutus", cursive;
+    border: 4px red solid;
+    display: inline-block;
+    background-color: rgb(0 0 0 0);
+    padding: 3px;
+    margin: 0px 0px 10px 20px;
+}
+
+.questions {
+    font-size: 35px;
     width: 60%;
     font-family: "Chela One", cursive;
     padding: 5px;
+    margin-left: 20px;
 }
 
 .numBtn {
@@ -58,9 +74,22 @@ h1 {
 img {
    height: 350px;
    width: 350px;
+   margin-left: 20px;
+   border: 10px blue double;
+   padding: 0px;
+   
 }
 
 p {
     font-size: 35px; 
     font-family: "Chela One", cursive;
+    padding: 5px;
+    margin-left: 20px
+}
+
+h3 {
+    font-size: 35px;
+    font-family: "Chela One", cursive;
+    padding: 5px;
+    margin-left: 20px;
 }

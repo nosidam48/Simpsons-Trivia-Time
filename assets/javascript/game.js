@@ -132,12 +132,13 @@ $(document).ready(function () {
                 $(".questions").text("Time's up!");
 
                 //replace the choices with "The correct answer was " + the answer pulled from gameArray[questNum].a  
-                $(".choices").append("<p>The correct answer was " + gameArray[questNum].a + "</p>");
+                $(".choices").append("<h3>The correct answer was " + gameArray[questNum].a + "</h3>");
                 console.log(gameArray[questNum].a);
 
                 //Append the gif to the end of the choices div
                 $(".choices").append("<br>" + gameArray[questNum].lg);
-                
+                var audio = new Audio('assets/images/gif-lose-' + Math.floor(Math.random() * 5) + '.mp3');
+                audio.play();
                 //Add one to unanswered questions
                 unanswered++;
                 console.log(unanswered);
@@ -151,11 +152,11 @@ $(document).ready(function () {
                 //function to set the next question 
                 function timeUp() {
                     if (questNum === gameArray.length) {
-                        
-                        $(".question").text("That all, here's how you did")
-                        $(".choices").html("Correct Answers: " + correctAnswer + "<br> Wrong Answers: " + wrongAnswer + "<br> Unanswered Questions: " + unanswered);
+                        $(".timer").empty();
+                        $(".questions").text("That all, here's how you did: ")
+                        $(".choices").html("<p>Correct Answers: " + correctAnswer + "</p><p> Wrong Answers: " + wrongAnswer + "</p><p> Unanswered Questions: " + unanswered + "</p>");
 
-                        $(".choices").append("<br><button class='reset'>Restart the game</button>");
+                        $(".choices").append("<br><div class='reset'>Restart the game</div>");
                         $(".reset").on("click", function(){
                             $(".questions").empty();
                                     $(".choices").empty();
@@ -169,18 +170,29 @@ $(document).ready(function () {
                                     countDown();
                                     $(".questions").text(gameArray[questNum].q);
                                     for (i = 0; i < 4; i++) {
-                                        $(".choices").append("<br> <div class='numBtn'>" + gameArray[questNum].c[i] + " </div><br>")
+                                        $(".choices").append("<br> <div class='numBtn'>" + gameArray[questNum].c[i] + " </div><br>");
+                                        $(".timer").empty();
+                                        startNum = 10;
+                                        console.log(startNum);
+                                        $(".timer").text("Time remaining: " + startNum);
                                     }
                         });
                         if (correctAnswer >= 7) {
-                            $(".choices").append("<br><img src='https://media3.giphy.com/media/l2JejtUtX0ImRvLnq/200.webp?cid=3640f6095bf0f07a4167586549f343d8'><br><p>You diddly doodly did it!</p>")
+                            $(".choices").prepend("<br><p>You diddly doodly did it!</p><br><img src='https://media3.giphy.com/media/l2JejtUtX0ImRvLnq/200.webp?cid=3640f6095bf0f07a4167586549f343d8'>");
+                            var audio = new Audio('assets/images/winner-winner.mp3');
+                            audio.play();
                         }
                         else if (correctAnswer <= 3) {
-                            $(".choices").append("<br><img src='https://media2.giphy.com/media/jUwpNzg9IcyrK/200.webp?cid=3640f6095bf0f0cf66416f385539f10c'><br><p>I was saying boo-urns</p>")
+                            $(".choices").prepend("<br><p>I was saying boo-urns</p><br><img src='https://media2.giphy.com/media/jUwpNzg9IcyrK/200.webp?cid=3640f6095bf0f0cf66416f385539f10c'>");
+                            var audio = new Audio('assets/images/lose-audio.wav');
+                            audio.play();
                         }
                         else {
-                            $(".choices").append("<br><img src='https://media1.giphy.com/media/oWjyixDbWuAk8/200.webp?cid=3640f6095bf0f15c616d62475153b23f'<br><p>Not bad! Join your family for some review!</p>")
+                            $(".choices").prepend("<p>Not bad! Join your family for some review!</p><br><img src='https://media1.giphy.com/media/oWjyixDbWuAk8/200.webp?cid=3640f6095bf0f15c616d62475153b23f'>");
+                            var audio = new Audio('assets/images/middle-gif.mp3');
+                            audio.play();
                         }
+                    
                     }
 
                     //timer back to ten
@@ -191,7 +203,7 @@ $(document).ready(function () {
                         $(".choices").empty();
                         console.log(startNum);
 
-                        $(".timer").text("Time remaining: " + startNum);
+                        
                         //set the timer again
                         intervalID = setInterval(countDown, 1000);
 
@@ -205,6 +217,10 @@ $(document).ready(function () {
                         for (i = 0; i < 4; i++) {
                             $(".choices").append("<br> <div class='numBtn'>" + gameArray[questNum].c[i] + " </div> <br>");
                             };
+                            $(".timer").empty();
+                            startNum = 10;
+                            console.log(startNum);
+                            $(".timer").text("Time remaining: " + startNum);
                             
                     }
                 
@@ -227,14 +243,17 @@ $(document).ready(function () {
                 $(".questions").text("That's Right!");
                 $(".choices").empty();
                 $(".choices").append("<br>" + gameArray[questNum].wg);
+                var audio = new Audio('assets/images/win-gif-' + Math.floor(Math.random() * 5) + '.mp3');
+                audio.play();
                 correctAnswer++;
                 questNum++;
                 setTimeout(winner, 5000);
                 function winner() {
                     if (questNum === gameArray.length) {
-                        $(".question").text("That all, here's how you did")
-                        $(".choices").html("Correct Answers: " + correctAnswer + "<br> Wrong Answers: " + wrongAnswer + "<br> Unanswered Questions: " + unanswered);
-                        $(".choices").append("<br><button class='reset'>Restart the game</button>");
+                        $(".timer").empty();
+                        $(".questions").text("That all, here's how you did: ")
+                        $(".choices").html("<p>Correct Answers: " + correctAnswer + "</p><p> Wrong Answers: " + wrongAnswer + "</p><p> Unanswered Questions: " + unanswered + "</p>");
+                        $(".choices").append("<br><div class='reset'>Restart the game</div>");
                         $(".reset").on("click", function(){
                             $(".questions").empty();
                                     $(".choices").empty();
@@ -243,7 +262,10 @@ $(document).ready(function () {
                             correctAnswer = 0;
                             unanswered = 0;
                             wrongAnswer = 0;
-                            $(".timer").text("Time remaining: " + startNum);
+                            
+                            startNum = 10;
+                            console.log(startNum);
+                        $(".timer").text("Time remaining: " + startNum);
                             intervalID = setInterval(countDown, 1000);
                                     countDown();
                                     $(".questions").text(gameArray[questNum].q);
@@ -252,13 +274,19 @@ $(document).ready(function () {
                                     }
                         })
                         if (correctAnswer >= 7) {
-                            $(".choices").append("<br><img src='https://media3.giphy.com/media/l2JejtUtX0ImRvLnq/200.webp?cid=3640f6095bf0f07a4167586549f343d8'><br><p>You diddly doodly did it!</p>")
+                            $(".choices").prepend("<br><p>You diddly doodly did it!</p><br><img src='https://media3.giphy.com/media/l2JejtUtX0ImRvLnq/200.webp?cid=3640f6095bf0f07a4167586549f343d8'>");
+                            var audio = new Audio('assets/images/winner-winner.mp3');
+                            audio.play();
                         }
                         else if (correctAnswer <= 3) {
-                            $(".choices").append("<br><img src='https://media2.giphy.com/media/jUwpNzg9IcyrK/200.webp?cid=3640f6095bf0f0cf66416f385539f10c'><br><p>I was saying boo-urns</p>")
+                            $(".choices").prepend("<br><p>I was saying boo-urns</p><br><img src='https://media2.giphy.com/media/jUwpNzg9IcyrK/200.webp?cid=3640f6095bf0f0cf66416f385539f10c'>");
+                            var audio = new Audio('assets/images/lose-audio.wav');
+                            audio.play();
                         }
                         else {
-                            $(".choices").append("<br><img src='https://media1.giphy.com/media/oWjyixDbWuAk8/200.webp?cid=3640f6095bf0f15c616d62475153b23f'<br><p>Not bad! Join your family for some review!</p>")
+                            $(".choices").prepend("<p>Not bad! Join your family for some review!</p><br><img src='https://media1.giphy.com/media/oWjyixDbWuAk8/200.webp?cid=3640f6095bf0f15c616d62475153b23f'>");
+                            var audio = new Audio('assets/images/middle-gif.mp3');
+                            audio.play();
                         }
                     }
 
@@ -274,7 +302,11 @@ $(document).ready(function () {
                         for (i = 0; i < 4; i++) {
                             $(".choices").append("<br> <div class='numBtn'>" + gameArray[questNum].c[i] + " </div> <br>");
 
-                        }
+                        };
+                        $(".timer").empty();
+                        startNum = 10;
+                        console.log(startNum);
+                        $(".timer").text("Time remaining: " + startNum);
                     }
                 }
             }
@@ -284,17 +316,24 @@ $(document).ready(function () {
             else {
                 $(".questions").text("Nope!");
                 $(".choices").empty();
-                $(".choices").append("<p>The correct answer was: " + gameArray[questNum].a + "</p>");
+                $(".choices").append("<h3>The correct answer was: " + gameArray[questNum].a + "</h3>");
                 $(".choices").append("<br>" + gameArray[questNum].lg);
+                var audio = new Audio('assets/images/gif-lose-' + Math.floor(Math.random() * 5) + '.mp3');
+                audio.play();
                 wrongAnswer++;
                 questNum++;
                 console.log("bleh");
+                // $(".timer").empty();
+                // startNum = 10;
+                // console.log(startNum);
+                // $(".timer").text("Time remaining: " + startNum);
                 setTimeout(loser, 5000);
                 function loser() {
                     if (questNum === gameArray.length) {
-                        $(".question").text("That all, here's how you did")
-                        $(".choices").html("Correct Answers: " + correctAnswer + "<br> Wrong Answers: " + wrongAnswer + "<br> Unanswered Questions: " + unanswered);
-                        $(".choices").append("<br><button class='reset'>Restart the game</button>");
+                        $(".timer").empty();
+                        $(".questions").text("That all, here's how you did: ")
+                        $(".choices").html("<p>Correct Answers: " + correctAnswer + "</p><p> Wrong Answers: " + wrongAnswer + "</p><p> Unanswered Questions: " + unanswered + "</p>");
+                        $(".choices").append("<br><div class='reset'>Restart the game</div>");
                         $(".reset").on("click", function(){
                             $(".questions").empty();
                                     $(".choices").empty();
@@ -308,32 +347,46 @@ $(document).ready(function () {
                                     countDown();
                                     $(".questions").text(gameArray[questNum].q);
                                     for (i = 0; i < 4; i++) {
-                                        $(".choices").append("<br> <div class='numBtn'>" + gameArray[questNum].c[i] + " </div><br>")
+                                        $(".choices").append("<br> <div class='numBtn'>" + gameArray[questNum].c[i] + " </div><br>");
+                                        $(".timer").empty();
+                                        startNum = 10;
+                                        console.log(startNum);
+                                        $(".timer").text("Time remaining: " + startNum);
                                     }
                         })
                         if (correctAnswer >= 7) {
-                            $(".choices").append("<br><img src='https://media3.giphy.com/media/l2JejtUtX0ImRvLnq/200.webp?cid=3640f6095bf0f07a4167586549f343d8'><br><p>You diddly doodly did it!</p>")
+                            $(".choices").prepend("<br><p>You diddly doodly did it!</p><br><img src='https://media3.giphy.com/media/l2JejtUtX0ImRvLnq/200.webp?cid=3640f6095bf0f07a4167586549f343d8'>");
+                            var audio = new Audio('assets/images/winner-winner.mp3');
+                            audio.play();
                         }
                         else if (correctAnswer <= 3) {
-                            $(".choices").append("<br><img src='https://media2.giphy.com/media/jUwpNzg9IcyrK/200.webp?cid=3640f6095bf0f0cf66416f385539f10c'><br><p>I was saying boo-urns</p>")
+                            $(".choices").prepend("<br><p>I was saying boo-urns</p><br><img src='https://media2.giphy.com/media/jUwpNzg9IcyrK/200.webp?cid=3640f6095bf0f0cf66416f385539f10c'>");
+                            var audio = new Audio('assets/images/lose-audio.wav');
+                            audio.play();
                         }
                         else {
-                            $(".choices").append("<br><img src='https://media1.giphy.com/media/oWjyixDbWuAk8/200.webp?cid=3640f6095bf0f15c616d62475153b23f'<br><p>Not bad! Join your family for some review!</p>")
+                            $(".choices").prepend("<p>Not bad! Join your family for some review!</p><br><img src='https://media1.giphy.com/media/oWjyixDbWuAk8/200.webp?cid=3640f6095bf0f15c616d62475153b23f'>");
+                            var audio = new Audio('assets/images/middle-gif.mp3');
+                            audio.play();
                         }
                     }
 
                     else {
                         $(".questions").empty();
                         $(".choices").empty();
-                        $(".timer").empty();
-                        startNum = 10;
-                        console.log(startNum);
-                        $(".timer").text("Time remaining: " + startNum);
+                        // $(".timer").empty();
+                        // startNum = 10;
+                        // console.log(startNum);
+                        // $(".timer").text("Time remaining: " + startNum);
                         intervalID = setInterval(countDown, 1000);
                         countDown();
                         $(".questions").text(gameArray[questNum].q);
                         for (i = 0; i < 4; i++) {
                             $(".choices").append("<br> <div class='numBtn'>" + gameArray[questNum].c[i] + " </div><br>")
+                            $(".timer").empty();
+                        startNum = 10;
+                        console.log(startNum);
+                        $(".timer").text("Time remaining: " + startNum);
                         }
 
                     }
